@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Auth\Presentation\Http\Controller\LoginController;
+use Auth\Presentation\Http\Controller\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +14,6 @@ use Auth\Presentation\Http\Controller\LoginController;
 |
 */
 Route::prefix('auth')->group(function(){
-    Route::post('/login', [LoginController::class, 'login'])->name('auth.login');
+    Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Auth\Infrastructure\Repositories;
 
+use Auth\Domain\Contracts\IPersonalAccessToken;
 use Auth\Domain\Repositories\ITokenRepository;
 use Carbon\Carbon;
-use Illuminate\Support\Str;
-use Laravel\Sanctum\PersonalAccessToken;
+use Auth\Infrastructure\Models\PersonalAccessToken;
 use Shared\User\IUser;
 
 class TokenRepository implements ITokenRepository
@@ -16,29 +16,25 @@ class TokenRepository implements ITokenRepository
         private readonly PersonalAccessToken $token
     ) {}
 
-    public function createToken(IUser $user): string
+    public function createToken(IUser $user, string $plain_text_token): IPersonalAccessToken
     {
-        $plainTextToken = $this->generateTokenString();
-
         $token = $this->token->newQuery()->forceCreate([
             'tokenable_id' => (string) $user->getId(),
             'tokenable_type' => $user->getModelName(),
             'name' => $user->getEmail() . "." . Carbon::now()->timestamp,
-            'token' => hash('sha256', $plainTextToken),
+            'token' => hash('sha256', $plain_text_token),
             'abilities' => ['*'],
             'expires_at' => null,
         ]);
 
+        return $token;
+
         return $token->getKey().'|'.$plainTextToken;
     }
 
-    private function generateTokenString(): string
+    public function removeToken(string $token): void
     {
-        return sprintf(
-            '%s%s%s',
-            config('sanctum.token_prefix', ''),
-            $tokenEntropy = Str::random(40),
-            hash('crc32b', $tokenEntropy)
-        );
+        $token = $this->token::findToken($token);
+        $token->delete();
     }
 }

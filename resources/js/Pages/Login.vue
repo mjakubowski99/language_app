@@ -24,6 +24,7 @@ import TextField from "../Components/Fields/TextField.vue";
 import PasswordField from "../Components/Fields/PasswordField.vue";
 import Button from "../Components/Buttons/Button.vue";
 
+
 export default defineComponent({
     components: {Button, PasswordField, TextField},
     data() {

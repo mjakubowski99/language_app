@@ -20,9 +20,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import TextField from "../Components/Fields/TextField.vue";
-import PasswordField from "../Components/Fields/PasswordField.vue";
-import Button from "../Components/Buttons/Button.vue";
+import TextField from "../components/Fields/TextField.vue";
+import PasswordField from "../components/Fields/PasswordField.vue";
+import Button from "../components/Buttons/Button.vue";
 
 
 export default defineComponent({

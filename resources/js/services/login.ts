@@ -1,5 +1,5 @@
-import {request, authRequest} from "../Services/api";
-import {ROUTES} from "../Constants/routes";
+import {request, authRequest} from ".//api";
+import {ROUTES} from "../constants/routes";
 
 const loginRequest = (data): Promise<any> => {
     data['device_name'] = window.navigator.userAgent;

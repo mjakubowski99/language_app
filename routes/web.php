@@ -2,11 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
-
-Route::get('/', function () {
-    return inertia('Welcome');
+Route::get('/', function (){
+    return redirect('/app');
 });
 
-Route::get('/login', function () {
-    return inertia('Login');
-});
+Route::get('/app/{any?}', function() {
+    return view('app');
+})->where('any', '.*');
+

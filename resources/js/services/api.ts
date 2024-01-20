@@ -1,5 +1,6 @@
 import axios from 'axios'
 import type {InternalAxiosRequestConfig} from "axios";
+import {token} from "@/services/auth";
 
 const makeAxios = () => axios.create({
     baseURL: 'http://localhost',
@@ -14,7 +15,7 @@ const request = makeAxios();
 const authRequest = makeAxios();
 
 authRequest.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-    config.headers['Authorization'] = 'Bearer {token}';
+    config.headers['Authorization'] = 'Bearer ' + token();
     return config;
 })
 

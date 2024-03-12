@@ -7,8 +7,9 @@ namespace Tests\Integration\src\Auth\Presentation\Http\Controller;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
+use Shared\Enum\UserType;
+use Student\Infrastructure\Models\Student;
 use Tests\TestCase;
-use User\Infrastructure\Models\User;
 
 class LoginControllerTest extends TestCase
 {
@@ -20,7 +21,7 @@ class LoginControllerTest extends TestCase
     public function login_validCredentials_loginWorksWithSanctumMiddleware(): void
     {
         // GIVEN
-        $user = User::factory()->create([
+        $user = Student::factory()->create([
             'password' => Hash::make('password123')
         ]);
         Route::get('/user/test', function(){
@@ -31,7 +32,8 @@ class LoginControllerTest extends TestCase
         $response = $this->json('POST', route('auth.login'), [
             'email' => $user->email,
             'password' => 'password123',
-            'device_name' => 'android12'
+            'device_name' => 'android12',
+            'user_type' => UserType::STUDENT->value
         ]);
 
         $authorized_response = $this->json('GET', '/user/test', [], [

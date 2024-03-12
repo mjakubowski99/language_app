@@ -171,7 +171,7 @@ return [
 
         \Auth\Infrastructure\Providers\AuthServiceProvider::class,
         \Shared\Providers\SharedServiceProvider::class,
-        \User\Infrastructure\Providers\UserServiceProvider::class,
+        \Student\Infrastructure\Providers\StudentServiceProvider::class,
     ])->toArray(),
 
     /*

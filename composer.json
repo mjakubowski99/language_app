@@ -27,9 +27,11 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "User\\": "src/User",
+            "Student\\": "src/Student",
             "Shared\\": "src/Shared",
-            "Auth\\": "src/Auth"
+            "Auth\\": "src/Auth",
+            "Course\\": "src/Course",
+            "Exercise\\": "src/Exercise"
         }
     },
     "autoload-dev": {

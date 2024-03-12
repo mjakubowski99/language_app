@@ -5,6 +5,10 @@ const saveUser = (response: LoginResponse) => {
     localStorage.setItem('user', JSON.stringify(response.user));
 }
 
+const saveToken = (token: string) => {
+    localStorage.setItem('token', token);
+}
+
 export const removeUser = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -21,4 +25,4 @@ const user = () => {
     return JSON.parse(localStorage.getItem('user'));
 }
 
-export {saveUser, token, user};
+export {saveUser, saveToken, token, user};

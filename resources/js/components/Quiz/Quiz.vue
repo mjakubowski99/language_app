@@ -1,15 +1,20 @@
 <template>
     <div>
         <QuizCard
+            v-if="!isFinished"
             :question-number="this.currentQuestion+1"
             :key="this.currentQuestion"
             :answer-time="10"
             :questionId="this.questions[this.currentQuestion].questionId"
             :question="this.questions[this.currentQuestion].question"
             :answers="this.questions[this.currentQuestion].answers"
-            @answer-time-finished="finished"
+            @answer-time-finished="timeFinished"
             @question-answered="answered"
         />
+
+        <div v-if="isFinished" class="border rounded-lg shadow-lg p-6 max-w-3xl mx-auto">
+            Result 15/15
+        </div>
     </div>
 </template>
 
@@ -24,9 +29,18 @@ export default defineComponent({
     data() {
         return {
             currentQuestion: 0,
+            isFinished: false,
             questions: [
                 {
                     questionId: "0",
+                    question: "Test",
+                    answers: [
+                        {answerId: "0", answer: "Text"},
+                        {answerId: "1", answer: "Textowa"},
+                    ],
+                },
+                {
+                    questionId: "1",
                     question: "Test",
                     answers: [
                         {answerId: "0", answer: "Text"},
@@ -40,7 +54,7 @@ export default defineComponent({
     mounted() {
     },
     methods: {
-        finished(questionId: string, userAnswerIds: String[]) {
+        timeFinished(questionId: string, userAnswerIds: String[]) {
             this.saveAnswers(questionId, userAnswerIds);
             this.goToNextQuestion();
         },
@@ -50,7 +64,8 @@ export default defineComponent({
         },
         goToNextQuestion() {
             if (this.currentQuestion+1>=this.questions.length) {
-                console.log(this.userAnswers);
+                this.isFinished = true;
+                this.$emit('quizFinished')
                 return;
             }
             this.currentQuestion++;

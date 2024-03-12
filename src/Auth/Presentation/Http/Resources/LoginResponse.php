@@ -18,7 +18,7 @@ class LoginResponse extends JsonResource
         return [
             'user' => [
                 'id' => (string) $this->resource->getUser()->getId(),
-                'email' => $this->resource->getUser()->getEmail()
+                'email' => $this->resource->getUser()->getUniqueIdentity(),
             ],
             'token' => $this->resource->getToken()
         ];

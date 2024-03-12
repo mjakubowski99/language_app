@@ -10,6 +10,8 @@ import { defineComponent } from 'vue'
 import {logout as logoutRequest} from "@/services/login";
 import QuizCard from "@/components/Quiz/QuizCard.vue";
 import Quiz from "@/components/Quiz/Quiz.vue";
+import {authRequest} from "@/services/api";
+import {API_ROUTES} from "@/constants/api_routes";
 
 export default defineComponent({
     components: {Quiz, QuizCard},
@@ -17,7 +19,8 @@ export default defineComponent({
     data() {
         return {}
     },
-    mounted() {
+    async mounted() {
+        await authRequest.get(API_ROUTES.me).then(res => console.log(res.data))
     },
     methods: {
         logout() {

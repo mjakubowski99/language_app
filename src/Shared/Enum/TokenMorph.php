@@ -6,5 +6,5 @@ namespace Shared\Enum;
 
 enum TokenMorph: string
 {
-    case USER = 'user';
+    case STUDENT = 'student';
 }

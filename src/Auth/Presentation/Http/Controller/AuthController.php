@@ -7,10 +7,12 @@ namespace Auth\Presentation\Http\Controller;
 use App\Http\Controllers\Controller;
 use Auth\Application\UseCases\LoginUser;
 use Auth\Application\UseCases\LogoutUser;
+use Auth\Application\UseCases\RefreshLogin;
 use Auth\Presentation\Http\Request\LoginRequest;
 use Auth\Presentation\Http\Request\LogoutRequest;
 use Auth\Presentation\Http\Resources\LoginResponse;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -24,6 +26,13 @@ class AuthController extends Controller
             ], 400);
         }
         return new LoginResponse($result);
+    }
+
+    public function refreshLogin(Request $request, RefreshLogin $use_case): JsonResponse
+    {
+        return new JsonResponse([
+            'token' => $use_case->refresh($request->bearerToken()??'')
+        ]);
     }
 
     public function logout(LogoutRequest $request, LogoutUser $use_case): JsonResponse

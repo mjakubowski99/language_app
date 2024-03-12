@@ -6,9 +6,9 @@ namespace Auth\Infrastructure\Repositories;
 
 use Auth\Domain\Contracts\IPersonalAccessToken;
 use Auth\Domain\Repositories\ITokenRepository;
-use Carbon\Carbon;
 use Auth\Infrastructure\Models\PersonalAccessToken;
-use Shared\User\IUser;
+use Carbon\Carbon;
+use Auth\Domain\Contracts\IAuth;
 
 class TokenRepository implements ITokenRepository
 {
@@ -16,20 +16,22 @@ class TokenRepository implements ITokenRepository
         private readonly PersonalAccessToken $token
     ) {}
 
-    public function createToken(IUser $user, string $plain_text_token): IPersonalAccessToken
+    public function findToken(string $token): ?IPersonalAccessToken
     {
-        $token = $this->token->newQuery()->forceCreate([
+        return $this->token::findToken($token);
+    }
+
+    public function createToken(IAuth $user, string $plain_text_token): IPersonalAccessToken
+    {
+        /** @var PersonalAccessToken */
+        return $this->token->newQuery()->forceCreate([
             'tokenable_id' => (string) $user->getId(),
-            'tokenable_type' => $user->getModelName(),
-            'name' => $user->getEmail() . "." . Carbon::now()->timestamp,
+            'tokenable_type' => PersonalAccessToken::userTypeToMorph($user->getUserType()),
+            'name' => $user->getUniqueIdentity() . "Repositories" . Carbon::now()->timestamp,
             'token' => hash('sha256', $plain_text_token),
             'abilities' => ['*'],
             'expires_at' => null,
         ]);
-
-        return $token;
-
-        return $token->getKey().'|'.$plainTextToken;
     }
 
     public function removeToken(string $token): void

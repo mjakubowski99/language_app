@@ -2,16 +2,16 @@
 
 namespace Auth\Domain\Models\DTO;
 
+use Auth\Domain\Contracts\IAuth;
 use Auth\Domain\Contracts\ILoginResult;
-use Shared\User\IUser;
 
 final class LoginResult implements ILoginResult
 {
     public function __construct(
-        private readonly bool $success,
-        private readonly ?IUser $user,
-        private readonly ?string $token,
-        private readonly ?string $fail_reason
+        private readonly bool      $success,
+        private readonly ?IAuth   $user,
+        private readonly ?string   $token,
+        private readonly ?string   $fail_reason
     ) {}
 
     public function success(): bool
@@ -19,7 +19,7 @@ final class LoginResult implements ILoginResult
         return $this->success;
     }
 
-    public function getUser(): ?IUser
+    public function getUser(): ?IAuth
     {
         return $this->user;
     }

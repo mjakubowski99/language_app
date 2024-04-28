@@ -19,12 +19,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import {defineComponent} from 'vue'
 import TextField from "@/components/Fields/TextField.vue";
 import PasswordField from "@/components/Fields/PasswordField.vue";
 import Button from "@/components/Buttons/Button.vue";
 import {login as loginRequest} from "@/services/login"
 import {redirectToRoute} from "@/services/navigation";
+import {UserType} from "@/interfaces/Login";
+import type {AxiosResponse} from "axios";
 
 
 export default defineComponent({
@@ -42,9 +44,12 @@ export default defineComponent({
             await loginRequest({
                 'email': email ?? '',
                 'password': password ?? '',
-                'device_name': window.navigator.userAgent
-            }).then((response) => {
-                redirectToRoute('/')
+                'device_name': window.navigator.userAgent,
+                'user_type': UserType.student,
+            }).then((response: AxiosResponse | null) => {
+                if (response?.status == 200) {
+                    redirectToRoute('/')
+                }
             })
         }
     }

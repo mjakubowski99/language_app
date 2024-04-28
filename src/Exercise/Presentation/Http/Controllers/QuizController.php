@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Exercise\Presentation\Http\Controller;
+namespace Exercise\Presentation\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Exercise\Application\UseCases\FindQuiz;
 use Exercise\Presentation\Http\Resources\QuizResource;
-use Exercise\Presentation\Request\QuizRequest;
+use Exercise\Presentation\Http\Requests\QuizRequest;
 
 class QuizController extends Controller
 {
@@ -18,4 +18,3 @@ class QuizController extends Controller
         );
     }
 }
-

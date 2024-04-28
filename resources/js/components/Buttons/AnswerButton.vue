@@ -1,7 +1,11 @@
 <template>
     <div @click="triggerCheck"
          class="w-full p-2 border hover:bg-gray-200 rounded cursor-pointer transition-colors"
-         :class="this.checked ? 'bg-blue-500' : ''"
+         :class="
+            this.correctAnswer ? 'bg-green-500' :
+            this.incorrectAnswer ? 'bg-red-500' :
+            this.checked ? 'bg-blue-500' : ''
+         "
     >
         {{ text }}
     </div>
@@ -19,6 +23,8 @@ export default defineComponent({
     data() {
         return {
             checked: false,
+            correctAnswer: null,
+            incorrectAnswer: null
         }
     },
     methods: {
@@ -28,6 +34,14 @@ export default defineComponent({
         },
         uncheck() {
             this.checked = false;
+        },
+        markAnswerAsCorrect() {
+            this.incorrectAnswer = null;
+            this.correctAnswer = true;
+        },
+        markAnswerAsIncorrect() {
+            this.correctAnswer = null;
+            this.incorrectAnswer = true;
         }
     }
 })

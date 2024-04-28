@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Auth\Domain\Repositories;
 
-use Auth\Domain\Contracts\IPersonalAccessToken;
 use Auth\Domain\Contracts\IAuth;
+use Auth\Domain\Contracts\IPersonalAccessToken;
 
 interface ITokenRepository
 {

@@ -6,15 +6,15 @@ namespace Auth\Domain\Providers;
 
 use Auth\Domain\Contracts\IAuth;
 use Auth\Domain\Models\DTO\Auth;
+use Gateways\Student\IStudentFacade;
+use Gateways\Student\Models\Student;
 use Shared\Enum\UserType;
-use Shared\Student\IStudent;
-use Shared\Student\IStudentProvider;
 use Shared\Utils\ValueObjects\Uuid;
 
 class StudentProvider implements IAuthProvider
 {
     public function __construct(
-        private readonly IStudentProvider $service
+        private readonly IStudentFacade $service
     ) {}
 
     public function findById(Uuid $uuid): ?IAuth
@@ -31,7 +31,7 @@ class StudentProvider implements IAuthProvider
         );
     }
 
-    private function toAuth(?IStudent $student): ?IAuth
+    private function toAuth(?Student $student): ?IAuth
     {
         if ($student===null) {
             return null;

@@ -6,7 +6,7 @@
     @vite('resources/css/app.css')
     @vite('resources/js/app.ts')
 </head>
-<body class="bg-gray-900 text-white">
+<body class="bg-zinc-900 text-white font-sans">
     <div id="app"></div>
 </body>
 </html>

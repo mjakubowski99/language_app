@@ -11,7 +11,14 @@ export const login = (data: LoginRequest): Promise<any> => {
             saveUser(response.data.data)
             return response
         })
-        .catch((err) => alert('Nieudane logowanie'))
+        .catch((err) => {
+            alert("Failed to login!")
+
+            if (err?.response) {
+                return err.response
+            }
+            return null;
+        })
 }
 
 export const logout = () => {

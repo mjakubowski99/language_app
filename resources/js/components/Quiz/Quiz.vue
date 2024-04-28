@@ -1,19 +1,25 @@
 <template>
     <div>
+        <div v-if="!quizStarted" class="border rounded-lg shadow-lg p-6 max-w-3xl mx-auto">
+            <Button @clicked="handleStart" text="Start"></Button>
+        </div>
+
         <QuizCard
-            v-if="!isFinished"
+            v-if="quizStarted && !isFinished"
             :question-number="this.currentQuestion+1"
             :key="this.currentQuestion"
-            :answer-time="10"
-            :questionId="this.questions[this.currentQuestion].questionId"
-            :question="this.questions[this.currentQuestion].question"
-            :answers="this.questions[this.currentQuestion].answers"
+            :answer-time="this.answerTime"
+            :multiple-answers="this.$props.questions[this.currentQuestion].multipleAnswers"
+            :questionId="this.$props.questions[this.currentQuestion].questionId"
+            :question="this.$props.questions[this.currentQuestion].question"
+            :answers="this.$props.questions[this.currentQuestion].answers"
+            :showAnswer="true"
             @answer-time-finished="timeFinished"
             @question-answered="answered"
         />
 
         <div v-if="isFinished" class="border rounded-lg shadow-lg p-6 max-w-3xl mx-auto">
-            Result 15/15
+            Finished
         </div>
     </div>
 </template>
@@ -21,39 +27,30 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import QuizCard from "@/components/Quiz/QuizCard.vue";
+import Button from "@/components/Buttons/Button.vue";
+import type {QuizQuestion} from "@/interfaces/Quiz";
 
 export default defineComponent({
-    components: {QuizCard},
+    components: {Button, QuizCard},
     props: {
+        answerTime: {type: Number},
+        questions: {
+            type: Array as () => QuizQuestion[],
+            default: () => [],
+        }
     },
     data() {
         return {
+            quizStarted: false,
             currentQuestion: 0,
             isFinished: false,
-            questions: [
-                {
-                    questionId: "0",
-                    question: "Test",
-                    answers: [
-                        {answerId: "0", answer: "Text"},
-                        {answerId: "1", answer: "Textowa"},
-                    ],
-                },
-                {
-                    questionId: "1",
-                    question: "Test",
-                    answers: [
-                        {answerId: "0", answer: "Text"},
-                        {answerId: "1", answer: "Textowa"},
-                    ],
-                },
-            ],
             userAnswers: {},
         }
     },
-    mounted() {
-    },
     methods: {
+        handleStart() {
+            this.quizStarted = true
+        },
         timeFinished(questionId: string, userAnswerIds: String[]) {
             this.saveAnswers(questionId, userAnswerIds);
             this.goToNextQuestion();

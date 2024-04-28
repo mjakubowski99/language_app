@@ -25,7 +25,11 @@ authRequest.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 })
 
 authRequest.interceptors.response.use(
-    (response: AxiosResponse) => response,
+    (response: AxiosResponse) => {
+        if (response.status >= 200 && response.status < 300) {
+            return response
+        }
+    },
     async (error) => {
         if (error?.response?.status === 401) {
             const req = makeAxios()

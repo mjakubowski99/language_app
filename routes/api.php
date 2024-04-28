@@ -1,8 +1,10 @@
 <?php
 
+use Auth\Presentation\Controllers\AuthController;
+use Course\Presentation\Http\Controller\CourseController;
+use Course\Presentation\Http\Controller\SubjectController;
+use Exercise\Presentation\Http\Controllers\QuizController;
 use Illuminate\Support\Facades\Route;
-use Auth\Presentation\Http\Controller\AuthController;
-use Exercise\Presentation\Http\Controller\QuizController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +22,15 @@ Route::prefix('auth')->group(function(){
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });
 
-Route::prefix('exercises')->group(function(){
-    Route::get('/quiz/{id}', [QuizController::class, 'get'])->name('exercises.quiz');
-});
+// Course
+Route::get('/courses/', [CourseController::class, 'index'])->name('course.index');
+Route::get('/courses/{id}', [CourseController::class, 'get'])->name('course.get');
+
+Route::get('/courses/subjects/{id}', [SubjectController::class, 'get'])->name('course.subject.get');
+
+Route::post('/courses/subjects/{id}/quiz', [SubjectController::class, 'generateQuiz'])->name('course.subject.quiz.create');
+
+// Exercises
+Route::get('/exercises/quiz/{id}', [QuizController::class, 'get'])
+    ->name('exercises.quiz')
+    ->middleware('auth:sanctum');

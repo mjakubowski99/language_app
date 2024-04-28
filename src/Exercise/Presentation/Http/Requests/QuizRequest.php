@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Exercise\Presentation\Request;
+namespace Exercise\Presentation\Http\Requests;
 
 use Shared\Http\Request\Request;
 use Shared\Utils\ValueObjects\Uuid;

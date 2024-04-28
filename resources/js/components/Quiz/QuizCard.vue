@@ -25,6 +25,7 @@ import ProgressBar from "@/components/Animated/ProgressBar.vue";
 import AnswerButton from "@/components/Buttons/AnswerButton.vue";
 import Button from "@/components/Buttons/Button.vue";
 import type {QuizAnswer} from "@/interfaces/Quiz";
+import {tr} from "vuetify/locale";
 
 export default defineComponent({
     name: "QuizCard",
@@ -33,9 +34,10 @@ export default defineComponent({
         questionNumber: {type: Number},
         questionId: {type: String},
         question: {type: String, default: ""},
-        multipleAnswers: {type: Boolean, default: true},
+        multipleAnswers: {type: Boolean, default: false},
         answerTime: {type: Number, default: 5},
-        answers: {type: Array[Object as PropType<QuizAnswer>], default: []}
+        answers: {type: Array[Object as PropType<QuizAnswer>], default: []},
+        showAnswer: {type: Boolean, default: true}
     },
     data() {
         return {
@@ -51,12 +53,49 @@ export default defineComponent({
         handleConfirm() {
             this.syncAnswers();
 
-            if (this.userAnswerIds.length == 0) {
-                alert("Zaznacz jakąś odpowiedź!")
-            } else {
-                this.$emit('questionAnswered', this.questionId, this.userAnswerIds);
+            if (this.showAnswer) {
+                this.checkAnswers();
             }
+
+            setTimeout(() => {
+                if (this.userAnswerIds.length == 0) {
+                    alert("Check some answer!")
+                } else {
+                    this.$emit('questionAnswered', this.questionId, this.userAnswerIds);
+                }
+            }, this.showAnswer ? 500 : 0);
         },
+
+        checkAnswers() {
+            this.userAnswerIds.map((answerId) => {
+                for(let answerButton of this.$refs.answers) {
+                    if (answerButton.answerId !== answerId) {
+                        const answerValid = this.checkAnswerIsValid(answerButton, answerId);
+
+                        if (answerValid) {
+                            answerButton.markAnswerAsCorrect();
+                        }
+
+                        continue;
+                    }
+
+                    const answerValid = this.checkAnswerIsValid(answerButton, answerId);
+
+                    if (answerValid) {
+                        answerButton.markAnswerAsCorrect();
+                    } else {
+                        answerButton.markAnswerAsIncorrect();
+                    }
+                }
+            });
+        },
+
+        checkAnswerIsValid(answerButton, answerId) {
+            return this.answers.some(answer => {
+                return answer.answerId === answerButton.answerId && answer.isValid
+            });
+        },
+
         handleAnswerTrigger(answerId: string, checked: boolean) {
             if (checked && !this.multipleAnswers) {
                 this.uncheckOtherButtons(answerId);

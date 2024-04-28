@@ -6,12 +6,12 @@ namespace Course\Application\UseCases;
 
 use Course\Domain\Contracts\ICourseList;
 use Course\Domain\Contracts\IGetCourseListRequest;
-use Course\Domain\Services\CourseListService;
+use Course\Domain\Services\CourseService;
 
 class GetCourseList
 {
     public function __construct(
-        private readonly CourseListService $service
+        private readonly CourseService $service
     ) {}
 
     public function get(IGetCourseListRequest $request): ICourseList

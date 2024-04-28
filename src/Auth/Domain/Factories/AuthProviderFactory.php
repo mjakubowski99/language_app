@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Auth\Domain\Factories;
 
+use Auth\Domain\Providers\IAuthProvider;
 use Auth\Domain\Providers\StudentProvider;
 use Shared\Enum\UserType;
-use Auth\Domain\Providers\IAuthProvider;
 use Shared\Utils\Container\IContainer;
 
 class AuthProviderFactory

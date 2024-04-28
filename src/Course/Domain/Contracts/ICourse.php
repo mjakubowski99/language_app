@@ -14,5 +14,5 @@ interface ICourse
 
     public function getLevel(): string;
 
-    public function getTeacherId(): int;
+    public function getTeacherId(): Uuid;
 }

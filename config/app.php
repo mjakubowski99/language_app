@@ -167,11 +167,15 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        App\Providers\Filament\AdminPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\TelescopeServiceProvider::class,
 
         \Auth\Infrastructure\Providers\AuthServiceProvider::class,
         \Shared\Providers\SharedServiceProvider::class,
         \Student\Infrastructure\Providers\StudentServiceProvider::class,
+        \Exercise\Infrastructure\Providers\ExerciseServiceProvider::class,
+        \Course\Infrastructure\Providers\CourseServiceProvider::class,
     ])->toArray(),
 
     /*

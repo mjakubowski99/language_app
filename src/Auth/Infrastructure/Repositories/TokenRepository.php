@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Auth\Infrastructure\Repositories;
 
+use Auth\Domain\Contracts\IAuth;
 use Auth\Domain\Contracts\IPersonalAccessToken;
 use Auth\Domain\Repositories\ITokenRepository;
 use Auth\Infrastructure\Models\PersonalAccessToken;
 use Carbon\Carbon;
-use Auth\Domain\Contracts\IAuth;
 
 class TokenRepository implements ITokenRepository
 {
@@ -27,7 +27,7 @@ class TokenRepository implements ITokenRepository
         return $this->token->newQuery()->forceCreate([
             'tokenable_id' => (string) $user->getId(),
             'tokenable_type' => PersonalAccessToken::userTypeToMorph($user->getUserType()),
-            'name' => $user->getUniqueIdentity() . "Repositories" . Carbon::now()->timestamp,
+            'name' => $user->getUniqueIdentity() . "." . Carbon::now()->timestamp,
             'token' => hash('sha256', $plain_text_token),
             'abilities' => ['*'],
             'expires_at' => null,
@@ -37,6 +37,6 @@ class TokenRepository implements ITokenRepository
     public function removeToken(string $token): void
     {
         $token = $this->token::findToken($token);
-        $token->delete();
+        $token?->delete();
     }
 }

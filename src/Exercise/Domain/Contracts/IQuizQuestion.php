@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Exercise\Domain\Contracts;
 
 use Shared\Utils\ValueObjects\Uuid;
@@ -14,6 +12,6 @@ interface IQuizQuestion
 
     public function hasMultipleAnswers(): bool;
 
-    /** @return IQuestionAnswer[] */
+    /** @return IQuizAnswer[] */
     public function getAnswers(): array;
 }

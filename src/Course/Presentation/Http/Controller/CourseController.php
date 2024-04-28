@@ -4,18 +4,30 @@ declare(strict_types=1);
 
 namespace Course\Presentation\Http\Controller;
 
+use Course\Application\UseCases\GetCourse;
 use Course\Application\UseCases\GetCourseList;
 use Course\Presentation\Http\Request\GetCourseListRequest;
+use Course\Presentation\Http\Resource\CourseDetailResource;
 use Course\Presentation\Http\Resource\CourseListResource;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Shared\Http\Controller\Controller;
+use Shared\Http\Request\Request;
+use Shared\Utils\ValueObjects\Uuid;
 
 class CourseController extends Controller
 {
-    public function get(GetCourseListRequest $request, GetCourseList $use_case): AnonymousResourceCollection
+    public function index(GetCourseListRequest $request, GetCourseList $use_case): CourseListResource
     {
         $result = $use_case->get($request);
 
-        return CourseListResource::collection($result);
+        return new CourseListResource($result);
+    }
+
+    public function get(Request $request, GetCourse $use_case): CourseDetailResource
+    {
+        $uuid = Uuid::fromString($request->route('id'));
+
+        $result = $use_case->get($uuid);
+
+        return new CourseDetailResource($result);
     }
 }

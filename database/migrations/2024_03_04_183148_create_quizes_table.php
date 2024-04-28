@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('quizes', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->unsignedSmallInteger('answer_time');
+            $table->unsignedSmallInteger('answer_seconds');
             $table->timestamps();
         });
     }

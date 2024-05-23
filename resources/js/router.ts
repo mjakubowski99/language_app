@@ -10,7 +10,7 @@ import SubjectPage from "@/pages/SubjectPage.vue";
 import CourseListPage from "@/pages/CourseListPage.vue";
 import CoursePage from "@/pages/CoursePage.vue";
 
-const routes = [
+const routes= [
     {
         path: route(ROUTES.home),
         name: 'welcome',

@@ -10,7 +10,8 @@
                         <h2 class="text-xl font-semibold text-white mb-6">{{ subject.name }}</h2>
 
                         <div
-                            class="mb-2 border-2 border-white-800 mb-2 block rounded-lg p-6 text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-white">
+                            class="mb-2 border-2 border-white-800 block rounded-lg p-6 text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-white"
+                        >
                             <div v-html="subject.description" />
                         </div>
 

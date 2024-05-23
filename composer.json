@@ -36,8 +36,7 @@
             "Shared\\": "src/Shared",
             "Auth\\": "src/Auth",
             "Course\\": "src/Course",
-            "Exercise\\": "src/Exercise",
-            "UseCases\\": "src/UseCases"
+            "Exercise\\": "src/Exercise"
         }
     },
     "autoload-dev": {
